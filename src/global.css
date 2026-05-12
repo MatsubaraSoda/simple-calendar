@@ -1,0 +1,21 @@
+/* BEGIN RESET */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* END RESET */
+
+/* BEGIN UTILS */
+.debug {
+    border: 1px solid red;
+}
+/* END UTILS */
