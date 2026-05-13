@@ -12,6 +12,30 @@ ol {
   margin: 0;
   padding: 0;
 }
+
+button {
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 /* END RESET */
 
 /* BEGIN UTILS */
@@ -19,3 +43,11 @@ ol {
     border: 1px solid red;
 }
 /* END UTILS */
+
+/* START LAYOUT */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* END LAYOUT */
