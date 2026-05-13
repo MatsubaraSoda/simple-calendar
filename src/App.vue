@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive, computed } from 'vue'
 import { weekdayOfFirstDay, daysInMonth, getCalendarToday } from '@/utils/dateTools'
+import YearSelect from '@/components/YearSelect.vue'
 
 interface CalendarDate {
   year: number;
@@ -27,6 +28,11 @@ const days = computed<(number | null)[]>(() => {
     ...Array.from({ length: 42 - (firstWeekday.value + totalDays.value) }, () => null),
   ]
 })
+
+// 年份范围 [1970, ..., 2099]
+const yearOptions = ref<number[]>(Array.from({ length: (2100 - 1970) }, (_, i) => 1970 + i));
+// 月份名字
+const monthOptions = ref<string[]>(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'])
 </script>
 
 <template>
@@ -40,11 +46,13 @@ const days = computed<(number | null)[]>(() => {
         <nav class="calendar__nav">
           <!-- 年份操作 -->
           <div class="calendar__nav-group calendar__nav-group--year">
-            <button class="calendar__btn calendar__btn--prev"><img src="/chevron-left.svg" class="calendar_icon"
-                alt="Previous year"></button>
-            <button class="calendar__btn calendar__btn--select">2026</button>
-            <button class="calendar__btn calendar__btn--next"><img src="/chevron-right.svg" class="calendar_icon"
-                alt="Next year"></button>
+            <button class="calendar__btn calendar__btn--prev"
+              @click="calendar.year = Math.max(1970, calendar.year - 1)"><img src="/chevron-left.svg"
+                class="calendar_icon" alt="Previous year"></button>
+            <YearSelect v-model="calendar.year" :options="yearOptions"></YearSelect>
+            <button class="calendar__btn calendar__btn--next"
+              @click="calendar.year = Math.min(2099, calendar.year + 1)"><img src="/chevron-right.svg"
+                class="calendar_icon" alt="Next year"></button>
           </div>
 
           <!-- 月份操作 -->
@@ -134,11 +142,18 @@ const days = computed<(number | null)[]>(() => {
 .calendar__nav-group {
   border: 1px solid black;
   border-radius: 8px;
-  overflow: hidden;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.calendar__btn--prev {
+  border-radius: 8px 0 0 8px;
+}
+
+.calendar__btn--next {
+  border-radius: 0 8px 8px 0;
 }
 
 .calendar__btn {
@@ -157,6 +172,7 @@ const days = computed<(number | null)[]>(() => {
 .calendar__btn--today {
   font-size: 1em;
   padding: 0 5px;
+  border-radius: 8px;
 }
 
 .calendar_icon {
