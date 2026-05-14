@@ -2,6 +2,7 @@
 import { ref, reactive, computed } from 'vue'
 import { weekdayOfFirstDay, daysInMonth, getCalendarToday } from '@/utils/dateTools'
 import YearSelect from '@/components/YearSelect.vue'
+import MonthSelect from '@/components/MonthSelect.vue'
 
 interface CalendarDate {
   year: number;
@@ -29,10 +30,36 @@ const days = computed<(number | null)[]>(() => {
   ]
 })
 
+// TODO: 将 yearOptions 移入 YearSelect.vue 组件中，不在该处声明；1970 和 2099 定义为常量
 // 年份范围 [1970, ..., 2099]
 const yearOptions = ref<number[]>(Array.from({ length: (2100 - 1970) }, (_, i) => 1970 + i));
-// 月份名字
-const monthOptions = ref<string[]>(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'])
+
+// 上一个月
+function handlePrevMonth() {
+  if (calendar.month === 1 && calendar.year === 1970) {
+    return ;
+  }
+  else if (calendar.month === 1) {
+    calendar.month = 12;
+    calendar.year -= 1;
+  }
+  else {
+    calendar.month -= 1;
+  }
+}
+// 下一个月
+function handleNextMonth() {
+  if (calendar.month === 12 && calendar.year === 2099) {
+    return ;
+  }
+  else if (calendar.month === 12) {
+    calendar.month = 1;
+    calendar.year += 1;
+  }
+  else {
+    calendar.month += 1;
+  }
+}
 </script>
 
 <template>
@@ -57,11 +84,11 @@ const monthOptions = ref<string[]>(['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'J
 
           <!-- 月份操作 -->
           <div class="calendar__nav-group calendar__nav-group--month">
-            <button class="calendar__btn calendar__btn--prev"><img src="/chevron-left.svg" class="calendar_icon"
-                alt="Previous month"></button>
-            <button class="calendar__btn calendar__btn--select">May</button>
-            <button class="calendar__btn calendar__btn--next"><img src="/chevron-right.svg" class="calendar_icon"
-                alt="Next month"></button>
+            <button class="calendar__btn calendar__btn--prev" @click="handlePrevMonth"><img src="/chevron-left.svg"
+                class="calendar_icon" alt="Previous month"></button>
+            <MonthSelect v-model="calendar.month"></MonthSelect>
+            <button class="calendar__btn calendar__btn--next" @click="handleNextMonth"><img src="/chevron-right.svg"
+                class="calendar_icon" alt="Next month"></button>
           </div>
 
           <!-- 回到今天 -->
