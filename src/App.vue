@@ -116,7 +116,7 @@ function handleNextMonth() {
 
       <!-- 底部区域 -->
       <footer class="calendar__footer">
-        <a href="" class="calendar__link"><img src="/github.svg" alt="GitHub" width="24" height="24"></a>
+        <a href="https://github.com/MatsubaraSoda/simple-calendar" target="_blank" rel="noopener noreferrer" class="calendar__link"><img src="/github.svg" alt="GitHub" width="24" height="24"></a>
       </footer>
     </div>
   </main>
