@@ -93,7 +93,7 @@ function handleNextMonth() {
 
           <!-- 回到今天 -->
           <div class="calendar__nav-group calendar__nav-group--action">
-            <button class="calendar__btn calendar__btn--today">Today</button>
+            <button class="calendar__btn calendar__btn--today" @click="Object.assign(calendar, getCalendarToday())">Today</button>
           </div>
         </nav>
       </header>
